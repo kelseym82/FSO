@@ -5,15 +5,24 @@ import java.util.Random;
 public class EightBall {
 	public String[] mAnswers = {
 			"It is certain",
-			"It is so",
-			"All signs say YES",
-			"The stars are not aligned",
-			"My reply is no",
-			"It is doubtful",
+			"It is decidedly so",
+			"Without a doubt",
+			"You may rely on it",
+			"As I see it yes",
+			"Most Likely",
+			"Outlook Good",
+			"Yes",
+			"Signs point to yes",
+			"Reply hazy try again",
+			"Ask again later",
 			"Better not tell you now",
+			"Cannot predict now",
 			"Concentrate and ask again",
-			"Unable to answer now",
-			"It is hard to say"};
+			"Don't count on it",
+			"My reply is no",
+			"My Sources say no",
+			"Outlook not so good",
+			"Very doubtful"};
 	// Methods (abilities: things the object can do)
 	public String getAnAnswer() {
 
