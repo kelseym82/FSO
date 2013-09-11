@@ -26,15 +26,10 @@ public class MainActivity extends Activity {
         //mCrystalBallImage = (ImageView) findViewById(R.id.imageView1);
         
         mGetAnswerButton.setOnClickListener(new View.OnClickListener() {
-			
 			public void onClick(View v) {
 				String answer = mEightBall.getAnAnswer();
-
-				
 				// Update the label with dynamic answer
 				mAnswerLabel.setText(answer);
-				
-				
 			}
 		});
     }
