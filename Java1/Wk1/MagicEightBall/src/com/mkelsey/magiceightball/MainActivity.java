@@ -12,7 +12,7 @@ public class MainActivity extends Activity {
 	private EightBall mEightBall = new EightBall();
 	private TextView mAnswerLabel;
 	private Button mGetAnswerButton;
-	//private ImageView mEightBallImage;
+	
 	
 	@Override
 	
@@ -34,40 +34,11 @@ public class MainActivity extends Activity {
 				// Update the label with dynamic answer
 				mAnswerLabel.setText(answer);
 				
-				//animateCrystalBall();
-				//animateAnswer();
-				//playSound();
+				
 			}
 		});
     }
 	
-	/*private void animateCrystalBall(){
-		mCrystalBallImage.setImageResource(R.drawable.ball_animation);
-		AnimationDrawable ballAnimation = (AnimationDrawable) mCrystalBallImage.getDrawable();
-		if (ballAnimation.isRunning()){
-			ballAnimation.stop();
-		}
-		ballAnimation.start();
-	}
-	
-	private void animateAnswer(){
-		AlphaAnimation fadeInAnimation = new AlphaAnimation(0, 1);
-		fadeInAnimation.setDuration(1500);
-		fadeInAnimation.setFillAfter(true);
-		
-		mAnswerLabel.setAnimation(fadeInAnimation);
-	}
-	
-	private void playSound(){
-		MediaPlayer player = MediaPlayer.create(this, R.raw.crystal_ball);
-		player.start();
-		player.setOnCompletionListener(new OnCompletionListener() {
-			
-			public void onCompletion(MediaPlayer mp) {
-				mp.release();				
-			}
-		});
-	}*/
 	
 
 	@Override
