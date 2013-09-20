@@ -49,6 +49,7 @@ public class MainfListActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mainf_list);
+		//Progress bar for when the application is loading.
 		mProgressBar = (ProgressBar) findViewById(R.id.progressBar1);
 		
 		if (isNetworkAvailable()){
@@ -82,7 +83,9 @@ public class MainfListActivity extends ListActivity {
 		}
 		
 	}
-
+	
+	
+	//Checks again if the network is available
 	private boolean isNetworkAvailable() {
 		ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = manager.getActiveNetworkInfo();
@@ -95,6 +98,7 @@ public class MainfListActivity extends ListActivity {
 		return isAvailable;
 	}
 
+	//Handles the response from the blog
 	public void handleBlogResponse() {
 		mProgressBar.setVisibility(View.INVISIBLE);
 		
@@ -154,6 +158,7 @@ public class MainfListActivity extends ListActivity {
 		emptyTextView.setText(getString(R.string.no_items));
 	}
 	
+	//Private class for getting the blog posts and putting them into the list view
 	private class GetBlogPostsTask extends AsyncTask<Object, Void, JSONObject>{
 
 		@Override
