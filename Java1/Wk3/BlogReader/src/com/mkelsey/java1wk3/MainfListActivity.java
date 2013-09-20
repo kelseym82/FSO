@@ -1,4 +1,6 @@
 package com.mkelsey.java1wk3;
+//Michael Kelsey
+//Fullsail Online - Java 1
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +9,8 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,25 +19,31 @@ import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class MainfListActivity extends ListActivity {
 
+	//Declared Variables
 	protected String[] mBlogPostTitles;
 	public static final int NUMBER_OF_POSTS = 20;
 	public static final String TAG = MainfListActivity.class.getSimpleName();
 	protected JSONObject mBlogData;
 	protected ProgressBar mProgressBar;
+	private final String KEY_TITLE = "title";
+	private final String KEY_AUTHOR = "author";
+			
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,25 @@ public class MainfListActivity extends ListActivity {
 		
 		//Toast.makeText(this, getString(R.string.no_items), Toast.LENGTH_LONG).show();
 	}
+	
+	
+	//This is the onClickListener for the ListView.  It detects which item in the list view is selected.
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		JSONArray jsonPosts;
+		try {
+			jsonPosts = mBlogData.getJSONArray("posts");
+			JSONObject jsonPost = jsonPosts.getJSONObject(position);
+			String blogUrl = jsonPost.getString("url");
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse(blogUrl));
+			startActivity(intent);
+		} catch (JSONException e) {
+			logException(e);
+		}
+		
+	}
 
 	private boolean isNetworkAvailable() {
 		ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -66,15 +95,6 @@ public class MainfListActivity extends ListActivity {
 		return isAvailable;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.mainf_list, menu);
-		return true;
-	}
-	
-
-
 	public void handleBlogResponse() {
 		mProgressBar.setVisibility(View.INVISIBLE);
 		
@@ -85,25 +105,43 @@ public class MainfListActivity extends ListActivity {
 			try {
 				//Log.d(TAG, mBlogData.toString(2));
 				JSONArray jsonPosts = mBlogData.getJSONArray("posts");
-				mBlogPostTitles = new String[jsonPosts.length()];
+				//This is a better way to use JSON Array.  Allows you to place multiple items without having to write more code.
+				ArrayList<HashMap<String, String>> blogPosts = new ArrayList<HashMap<String, String>>();
 				for (int i = 0; i < jsonPosts.length(); i++){
 					JSONObject post = jsonPosts.getJSONObject(i);
-					String title = post.getString("title");
+					String title = post.getString(KEY_TITLE);
 					title = Html.fromHtml(title).toString();
-					mBlogPostTitles[i] = title;
+					String author = post.getString(KEY_AUTHOR);
+					author = Html.fromHtml(author).toString();
+					
+					HashMap<String, String> blogPost = new HashMap<String, String>();
+					blogPost.put(KEY_TITLE, title);
+					blogPost.put(KEY_AUTHOR, author);
+					
+					blogPosts.add(blogPost);
 				}
 				
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mBlogPostTitles);
+				String[] keys = {KEY_TITLE, KEY_AUTHOR};
+				int[] ids = { android.R.id.text1, android.R.id.text2};
+				SimpleAdapter adapter = new SimpleAdapter(this, blogPosts, android.R.layout.simple_list_item_2, keys, ids);
 				
 				setListAdapter(adapter);
+					
 			} 
 			catch (JSONException e) {
-				Log.e(TAG, "Exception Caught: ", e);
+				logException(e);
 			}
 		}
 		
 	}
 
+	//Log exception method, used to save me time typing things out.
+	private void logException(Exception e) {
+		Log.e(TAG, "Exception Caught!", e);
+	}
+	
+	
+	//This is the pop up error message method used throughout the application
 	private void updateDisplayForError() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(getString(R.string.title));
@@ -146,14 +184,14 @@ public class MainfListActivity extends ListActivity {
 				
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
-				Log.e(TAG, "Exception caught: ", e);
+				logException(e);
 				//e.printStackTrace();
 			}
 			catch (IOException e){
-				Log.e(TAG, "Exception caught: ", e);
+				logException(e);
 			}
 			catch (Exception e){
-				Log.e(TAG, "Exception caught: ", e);
+				logException(e);
 			}
 			
 			return jsonResponse;
