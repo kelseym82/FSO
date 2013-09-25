@@ -26,7 +26,7 @@ public class SpinnerDisplay extends LinearLayout{
 		
 		LayoutParams lp;
 		
-		_beers.add("Select Beer from List");
+		_beers.add("Favorite Locations");
 		_list = new Spinner(_context);
 		lp = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
 		_list.setLayoutParams(lp);

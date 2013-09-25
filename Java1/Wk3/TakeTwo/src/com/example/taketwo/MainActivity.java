@@ -4,6 +4,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +19,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.mkelsey.lib.FileStuff;
 import com.mkelsey.lib.WebStuff;
 
 public class MainActivity extends Activity {
@@ -33,6 +39,7 @@ public class MainActivity extends Activity {
 	ArrayList<String> _beerNameList = new ArrayList<String>();
 	ArrayList<String> _abvList = new ArrayList<String>();
 	ArrayList<String> _desList = new ArrayList<String>();
+	HashMap<String, String> _history;
 
 
 
@@ -42,6 +49,8 @@ public class MainActivity extends Activity {
 
 		_context = this;
 		_appLayout = new LinearLayout(this);
+		_history = getHistory();
+		Log.i("HISTORY READ", _history.toString());
 		
 		_search = new SearchForm(_context, "Enter Zip Code", "Search");
 		
@@ -69,7 +78,7 @@ public class MainActivity extends Activity {
 		//Display Beer Data Handler
 		_weather = new BeerDisplay(_context);
 		
-		//Spiiner Handler
+		//Spinner Handler
 		_spinner = new SpinnerDisplay(_context);
 		
 		//Add view to the layout
@@ -109,6 +118,19 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	private HashMap<String, String> getHistory(){
+		Object stored = FileStuff.readObjectFile(_context, "history", false);
+		
+		HashMap<String, String> history;
+		if(stored == null){
+			Log.i("HISTORY", "NO HISTORY FILE FOUND");
+			history = new HashMap<String, String>();
+		} else {
+			history = (HashMap<String, String>) stored;
+		}
+		return history;
+	}
 	
 	private class WeatherRequest extends AsyncTask<URL, Void, String>{
 		@Override
@@ -123,7 +145,24 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result){
 			Log.i("URL RESPONSE", result);
-			
+			try {
+				JSONObject json = new JSONObject(result);
+				JSONObject results = json.getJSONObject("query").getJSONObject("results").getJSONObject("channel").getJSONObject("item");
+				if(results.getString("title").compareTo("N/A")==0){
+					Toast toast = Toast.makeText(_context, "Invalid Zip Code", Toast.LENGTH_LONG);
+					toast.show();
+				}else{
+					Toast toast = Toast.makeText(_context, "Valid Zip Code showing " + results.getString("title"), Toast.LENGTH_LONG);
+					toast.show();
+					_history.put(results.getString("title"), results.toString());
+					FileStuff.storeObjectFile(_context, "history", _history, false);
+					FileStuff.storeStringFile(_context, "temp", results.toString(), true);
+				}
+			} catch (JSONException e) {
+				Log.e("JSON", "JSON OBJECT EXCEPTION");
+				//Toast toast = Toast.makeText(_context, "Invalid Zip Code", Toast.LENGTH_LONG);
+				//32toast.show();
+			}
 			
 		}
 		
