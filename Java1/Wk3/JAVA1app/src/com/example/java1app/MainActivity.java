@@ -31,7 +31,7 @@ import com.mkelsey.lib.NetworkClass;
 
 public class MainActivity extends Activity {
 	
-	Context context;
+	Context _context;
 	String[] beerName;
 	Resources res;
 	TextView results;
@@ -42,13 +42,13 @@ public class MainActivity extends Activity {
 	String abv;
 	String cal;
 	String breweryName;
-
+	Boolean connected = false;
 	ArrayList<String> beerNameListArray = new ArrayList<String>();
 	ArrayList<String> abvListArray = new ArrayList<String>();
 	ArrayList<String> calListArray = new ArrayList<String>();
 	ArrayList<String> breweryNameListArray = new ArrayList<String>();
 	
-	Boolean connected = false;
+	
 	
 
 	@Override
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		
-		context = this;
+		_context = this;
 		res = getResources();
 		
 		// setting the linear layout
@@ -84,16 +84,17 @@ public class MainActivity extends Activity {
 		});
 	
 
-	connectedView = new TextView(context);
+	//connectedView = new TextView(_context);
 	
-	// Detecting network settings
-			connected = NetworkClass.getConnectionStatus(context);
+	// Detecting network connection
+			connected = NetworkClass.getConnectionStatus(_context);
 			if(connected){
 				
-				connectedView.setText("Network Connection: " + NetworkClass.getConnectionType(context)+"\n");
+				Log.i("NETWORK CONNECTION", NetworkClass.getConnectionType(_context));
+				//connectedView.setText("Network Connection: " + NetworkClass.getConnectionType(_context)+"\n");
 			}
 			else{
-					connectedView.setText(""+NetworkClass.getConnectionType(context)+"\n");
+					//connectedView.setText(""+NetworkClass.getConnectionType(_context)+"\n");
 			}
 
 			
@@ -101,16 +102,16 @@ public class MainActivity extends Activity {
 			getBeerData();
 	
 	// song length display
-	/*int songNum = res.getStringArray(R.array.songArray).length;
-	TextView tv = new TextView(context);
-	tv.setText("Check out one of the "+songNum+" songs on the album");*/
+	/*int songNum = res.getStringArray(R.array.songArray).length;*/
+	//TextView tv = new TextView(context);
+	//tv.setText("Check out one of the "+songNum+" songs on the album");*/
 	
 	//spinner adapter
-	ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, beerName);
+	ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, beerName);
 	spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	
 	//creating the spinner
-	viewSpinner = new Spinner(context);
+	viewSpinner = new Spinner(_context);
 	viewSpinner.setAdapter(spinnerAdapter);
 	lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 	viewSpinner.setLayoutParams(lp);
@@ -121,7 +122,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view,
 				int position, long id) {
-			Toast.makeText(context, "You selected " + beerName[position], Toast.LENGTH_LONG).show();
+			Toast.makeText(_context, "You selected " + beerName[position], Toast.LENGTH_LONG).show();
 		}
 
 		@Override
@@ -151,7 +152,6 @@ public class MainActivity extends Activity {
 
 @Override
 public boolean onCreateOptionsMenu(Menu menu) {
-	// Inflate the menu; this adds items to the action bar if it is present.
 	getMenuInflater().inflate(R.menu.main, menu);
 	return true;
 }

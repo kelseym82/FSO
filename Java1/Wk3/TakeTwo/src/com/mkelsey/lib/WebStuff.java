@@ -9,34 +9,28 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-public class NetworkClass {
-
+public class WebStuff {
+	
 	static Boolean _conn = false;
 	static String _connectionType = "Unavailable";
 	
 	public static String getConnectionType(Context context){
-		
-		webInfo(context);
+		netInfo(context);
 		return _connectionType;
 	}
 	
 	public static Boolean getConnectionStatus(Context context){
-		
-		webInfo(context);
+		netInfo(context);
 		return _conn;
 	}
 	
-	private static void webInfo(Context context){
-		
-		
-		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	private static void netInfo(Context context){
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
 		if(ni != null){
-			
 			if(ni.isConnected()){
 				_connectionType = ni.getTypeName();
 				_conn = true;
-				
 			}
 		}
 	}
@@ -45,7 +39,6 @@ public class NetworkClass {
 		String response = "";
 		
 		try{
-			
 			URLConnection conn = url.openConnection();
 			BufferedInputStream bin = new BufferedInputStream(conn.getInputStream());
 			
@@ -54,15 +47,12 @@ public class NetworkClass {
 			StringBuffer responseBuffer = new StringBuffer();
 			
 			while((bytesRead = bin.read(contentBytes)) != -1){
-				
-				response = new String(contentBytes,0,bytesRead);
+				response = new String(contentBytes, 0, bytesRead);
 				responseBuffer.append(response);
 			}
 			return responseBuffer.toString();
-		}
-		catch(Exception e){
-			
-			Log.e("URL RESPONSE ERROR", "getURLStringResponse");
+		} catch (Exception e){
+			Log.e("URL RESPONSE ERROR", "getURLStringResponse Failed");
 		}
 		
 		return response;

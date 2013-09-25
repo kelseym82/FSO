@@ -14,15 +14,7 @@ import android.util.Log;
 
 public class FileClass {
 
-	/**
-	 * Store string file.
-	 *
-	 * @param context the context
-	 * @param filename the filename
-	 * @param content the content
-	 * @param external the external
-	 * @return the boolean
-	 */
+
 	@SuppressWarnings("resource")
 	public static Boolean storeStringFile(Context context, String filename, String content, Boolean external){
 		try{
@@ -43,29 +35,6 @@ public class FileClass {
 	}
 
 
-	/**
-	 * Store object file.
-	 *
-	 * @param context the context
-	 * @param filename the filename
-	 * @param external the external
-	 * @return the boolean
-	 */
-	public static Boolean storeObjectFile(Context context, String filename, Boolean external){
-
-		return true;
-	}
-
-
-	/**
-	 * Store object file.
-	 *
-	 * @param context the context
-	 * @param filename the filename
-	 * @param content the content
-	 * @param external the external
-	 * @return the boolean
-	 */
 	@SuppressWarnings("resource")
 	public static Boolean storeObjectFile(Context context, String filename, Object content, Boolean external){
 		try{
@@ -88,15 +57,6 @@ public class FileClass {
 		return true;
 	}
 
-
-	/**
-	 * Read string file.
-	 *
-	 * @param context the context
-	 * @param filename the filename
-	 * @param external the external
-	 * @return the string
-	 */
 	@SuppressWarnings("resource")
 	public static String readStringFile(Context context, String filename, Boolean external){
 		String content = "";
@@ -129,15 +89,6 @@ public class FileClass {
 		return content;
 	}
 
-	
-	/**
-	 * Read object file.
-	 *
-	 * @param context the context
-	 * @param filename the filename
-	 * @param external the external
-	 * @return the object
-	 */
 	@SuppressWarnings("resource")
 	public static Object readObjectFile(Context context, String filename, Boolean external){
 		Object content = new Object();
