@@ -18,7 +18,7 @@ public class SpinnerDisplay extends LinearLayout{
 	Button _remove;
 	Spinner _list;
 	Context _context;
-	ArrayList<String> _beers = new ArrayList<String>();
+	ArrayList<String> _zipCodes = new ArrayList<String>();
 	
 	public SpinnerDisplay(Context context){
 		super(context);
@@ -26,11 +26,11 @@ public class SpinnerDisplay extends LinearLayout{
 		
 		LayoutParams lp;
 		
-		_beers.add("Favorite Locations");
+		_zipCodes.add("Favorite Locations");
 		_list = new Spinner(_context);
 		lp = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
 		_list.setLayoutParams(lp);
-		ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, _beers);
+		ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(_context, android.R.layout.simple_spinner_item, _zipCodes);
 		listAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 		_list.setAdapter(listAdapter);
 		_list.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -64,9 +64,9 @@ public class SpinnerDisplay extends LinearLayout{
 	}
 	
 	private void updateBeerList(){
-		_beers.add("Coors");
-		_beers.add("Bud");
-		_beers.add("Corona");
+		_zipCodes.add("32904");
+		_zipCodes.add("90210");
+		_zipCodes.add("00101");
 		
 	}
 }
