@@ -6,9 +6,9 @@ import android.widget.TextView;
 
 public class BeerDisplay extends GridLayout {
 	
-	TextView _beerName;
-	TextView _abv;
-	TextView _description;
+	TextView _locationName;
+	TextView _tempText;
+	TextView _condition;
 	Context _context;
 	
 	public BeerDisplay(Context context){
@@ -18,21 +18,21 @@ public class BeerDisplay extends GridLayout {
 		
 		this.setColumnCount(2);
 		
-		TextView beerNameLabel = new TextView(_context);
-		beerNameLabel.setText("Name:");
-		_beerName = new TextView(_context);
-		TextView abvLabel  = new TextView(_context);
-		abvLabel.setText("ABV:");
-		_abv = new TextView(_context);
-		TextView descriptionLabel = new TextView(_context);
-		descriptionLabel.setText("Description:");
-		_description = new TextView(_context);
+		TextView locationLabel = new TextView(_context);
+		locationLabel.setText("Location:");
+		_locationName = new TextView(_context);
+		TextView tempLabel  = new TextView(_context);
+		tempLabel.setText("Temp:");
+		_tempText = new TextView(_context);
+		TextView conditionLabel = new TextView(_context);
+		conditionLabel.setText("Condition:");
+		_condition = new TextView(_context);
 		
-		this.addView(beerNameLabel);
-		this.addView(_beerName);
-		this.addView(abvLabel);
-		this.addView(_abv);
-		this.addView(descriptionLabel);
-		this.addView(_description);
+		this.addView(locationLabel);
+		this.addView(_locationName);
+		this.addView(tempLabel);
+		this.addView(_tempText);
+		this.addView(conditionLabel);
+		this.addView(_condition);
 	}
 }
