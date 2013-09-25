@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mkelsey.lib.FileStuff;
@@ -40,6 +41,12 @@ public class MainActivity extends Activity {
 	ArrayList<String> _abvList = new ArrayList<String>();
 	ArrayList<String> _desList = new ArrayList<String>();
 	HashMap<String, String> _history;
+	TextView _textView;
+	String _weatherLocation;
+	String _weatherTemp;
+	String _weatherCondition;
+		
+	
 
 
 
@@ -66,6 +73,7 @@ public class MainActivity extends Activity {
 				Log.i("CLICK HANDLER", _search.getField().getText().toString());
 				getWeatherData(_search.getField().getText().toString());
 				
+				
 			}
 		});
 		
@@ -75,16 +83,23 @@ public class MainActivity extends Activity {
 			Log.i("NETWORK CONNECTION", WebStuff.getConnectionType(_context));
 		}
 		
-		//Display Beer Data Handler
+		//Display  Data Handler
 		_weather = new BeerDisplay(_context);
 		
 		//Spinner Handler
 		_spinner = new SpinnerDisplay(_context);
 		
+		//TextView Handler
+		_textView = new TextView(_context);
+
+		
+		
 		//Add view to the layout
 		_appLayout.addView(_search);
-		_appLayout.addView(_weather);
-		_appLayout.addView(_spinner);
+		//_appLayout.addView(_weather);
+		//_appLayout.addView(_spinner);
+		_appLayout.addView(_textView);
+		
 		
 		_appLayout.setOrientation(LinearLayout.VERTICAL);
 		setContentView(_appLayout);
@@ -147,16 +162,21 @@ public class MainActivity extends Activity {
 			Log.i("URL RESPONSE", result);
 			try {
 				JSONObject json = new JSONObject(result);
-				JSONObject results = json.getJSONObject("query").getJSONObject("results").getJSONObject("channel").getJSONObject("item");
-				if(results.getString("title").compareTo("N/A")==0){
+				JSONObject _locationResults = json.getJSONObject("query").getJSONObject("results").getJSONObject("channel").getJSONObject("item");
+				JSONObject _weatherResults = json.getJSONObject("query").getJSONObject("results").getJSONObject("channel").getJSONObject("item").getJSONObject("condition");
+				if(_locationResults.getString("title") == "City not found"){
 					Toast toast = Toast.makeText(_context, "Invalid Zip Code", Toast.LENGTH_LONG);
 					toast.show();
 				}else{
-					Toast toast = Toast.makeText(_context, "Valid Zip Code showing " + results.getString("title"), Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(_context, "Valid Zip Code showing " + _locationResults.getString("title"), Toast.LENGTH_LONG);
 					toast.show();
-					_history.put(results.getString("title"), results.toString());
+					_weatherLocation = _locationResults.getString("title");
+					_weatherTemp = _weatherResults.getString("temp");
+					_weatherCondition = _weatherResults.getString("text");
+					_textView.setText(_weatherLocation + "\r\n" + "Current Temp: " + _weatherTemp + "\r\n" + "Current Weather: " + _weatherCondition);
+					_history.put(_locationResults.getString("title"), _locationResults.toString());
 					FileStuff.storeObjectFile(_context, "history", _history, false);
-					FileStuff.storeStringFile(_context, "temp", results.toString(), true);
+					FileStuff.storeStringFile(_context, "temp", _locationResults.toString(), true);
 				}
 			} catch (JSONException e) {
 				Log.e("JSON", "JSON OBJECT EXCEPTION");
