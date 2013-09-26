@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Weather App</string>
@@ -8,6 +8,5 @@
     <string name="location">Location: </string>
     <string name="temp">Tempurature: </string>
     <string name="condition">Condition: </string>
-    <string name="status_picture">status_picture</string>
 
 </resources>

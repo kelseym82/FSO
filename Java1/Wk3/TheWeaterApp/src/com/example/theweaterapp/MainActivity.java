@@ -1,4 +1,4 @@
-package com.example.taketwo;
+package com.example.theweaterapp;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -19,7 +20,6 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,15 +32,13 @@ public class MainActivity extends Activity {
 	Context _context;
 	Boolean _connected = false;
 	HashMap<String, String> _history;
-	ImageView _image;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.form);
 		_context = this;
-	
-		_image = (ImageView) findViewById(R.id.image);
+		
 		_history = getHistory();
 		Log.i("HISTORY READ", _history.toString());
 		
@@ -56,7 +54,6 @@ public class MainActivity extends Activity {
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(field.getWindowToken(), 0);
 				getWeatherData(zipCode);
-				
 			}
 		});
 		
@@ -137,24 +134,9 @@ public class MainActivity extends Activity {
 				}else{
 					Toast toast = Toast.makeText(_context, "Valid Zip Code showing " + _locationResults.getString("title"), Toast.LENGTH_LONG);
 					toast.show();
-					String text = _weatherResults.getString("text");
 					((TextView) findViewById(R.id.data_location)).setText(_locationResults.getString("title"));
 					((TextView) findViewById(R.id.data_temp)).setText(_weatherResults.getString("temp"));
-					((TextView) findViewById(R.id.data_condition)).setText(text);
-					//Changes the Image on the page dependent on the type of weather outside, there are 48 types of weather, for now I am only coding in five.
-					if (text.equals("Partly Cloudy")){
-						_image.setImageResource(R.drawable.partly_cloudy);
-						Log.i("IMAGE SET", "PARTLY CLOUDY");
-					} else if (text.equals("Isolated Thunderstorms")){
-						_image.setImageResource(R.drawable.storms);
-					} else if (text.equals("Few Showers")){
-						_image.setImageResource(R.drawable.scatter_showers);
-					} else if (text.equals("Sunny")){
-						_image.setImageResource(R.drawable.sunny);
-					} else if (text.equals("Showers")){
-						_image.setImageResource(R.drawable.rain);
-					}
-					
+					((TextView) findViewById(R.id.data_condition)).setText(_weatherResults.getString("text"));
 					//_textView.setText(_weatherLocation + "\r\n" + "Current Temp: " + _weatherTemp + "\r\n" + "Current Weather: " + _weatherCondition);
 					_history.put(_locationResults.getString("title"), _locationResults.toString());
 					FileStuff.storeObjectFile(_context, "history", _history, false);

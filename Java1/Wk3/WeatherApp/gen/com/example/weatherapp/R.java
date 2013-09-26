@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.example.taketwo;
+package com.example.weatherapp;
 
 public final class R {
     public static final class attr {
@@ -21,27 +21,10 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int cloudy=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int partly_cloudy=0x7f020002;
-        public static final int rain=0x7f020003;
-        public static final int scatter_showers=0x7f020004;
-        public static final int scatter_snow=0x7f020005;
-        public static final int snow=0x7f020006;
-        public static final int snow_rain=0x7f020007;
-        public static final int storms=0x7f020008;
-        public static final int sunny=0x7f020009;
-        public static final int weather_icon=0x7f02000a;
+        public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080007;
-        public static final int data_condition=0x7f080005;
-        public static final int data_location=0x7f080003;
-        public static final int data_temp=0x7f080004;
-        public static final int image=0x7f080006;
-        public static final int searchButton=0x7f080001;
-        public static final int searchField=0x7f080000;
-        public static final int weatherdata=0x7f080002;
+        public static final int action_settings=0x7f080000;
     }
     public static final class layout {
         public static final int form=0x7f030000;
@@ -52,12 +35,7 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int condition=0x7f050006;
-        public static final int go=0x7f050003;
-        public static final int location=0x7f050004;
-        public static final int status_picture=0x7f050007;
-        public static final int temp=0x7f050005;
-        public static final int zip_code=0x7f050002;
+        public static final int hello_world=0x7f050002;
     }
     public static final class style {
         /** 
@@ -83,9 +61,8 @@ public final class R {
          */
         public static final int AppBaseTheme=0x7f060000;
         /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
-        public static final int DataStyle=0x7f060003;
-        public static final int LabelStyle=0x7f060002;
     }
 }
