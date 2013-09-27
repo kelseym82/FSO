@@ -131,7 +131,7 @@ public class MainActivity extends Activity {
 				JSONObject json = new JSONObject(result);
 				JSONObject _locationResults = json.getJSONObject("query").getJSONObject("results").getJSONObject("channel").getJSONObject("item");
 				JSONObject _weatherResults = json.getJSONObject("query").getJSONObject("results").getJSONObject("channel").getJSONObject("item").getJSONObject("condition");
-				if(_locationResults.getString("title") == "City not found"){
+				if(_locationResults.getString("title").equals("City not found")){
 					Toast toast = Toast.makeText(_context, "Invalid Zip Code", Toast.LENGTH_LONG);
 					toast.show();
 				}else{
@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
 					((TextView) findViewById(R.id.data_location)).setText(_locationResults.getString("title"));
 					((TextView) findViewById(R.id.data_temp)).setText(_weatherResults.getString("temp"));
 					((TextView) findViewById(R.id.data_condition)).setText(text);
-					//Changes the Image on the page dependent on the type of weather outside, there are 48 types of weather, for now I am only coding in five.
+					//Changes the Image on the page dependent on the type of weather outside, there are 48 types of weather, for now I am only coding in s.
 					if (text.equals("Partly Cloudy")){
 						_image.setImageResource(R.drawable.partly_cloudy);
 						Log.i("IMAGE SET", "PARTLY CLOUDY");
@@ -153,6 +153,8 @@ public class MainActivity extends Activity {
 						_image.setImageResource(R.drawable.sunny);
 					} else if (text.equals("Showers")){
 						_image.setImageResource(R.drawable.rain);
+					}else if (text.equals("Mostly Cloudy")){
+						_image.setImageResource(R.drawable.cloudy);
 					}
 					
 					//_textView.setText(_weatherLocation + "\r\n" + "Current Temp: " + _weatherTemp + "\r\n" + "Current Weather: " + _weatherCondition);
