@@ -153,7 +153,7 @@ public class MainActivity extends Activity {
 						_image.setImageResource(R.drawable.sunny);
 					} else if (text.equals("Showers")){
 						_image.setImageResource(R.drawable.rain);
-					}else if (text.equals("Mostly Cloudy")){
+					} else if (text.equals("Mostly Cloudy")){
 						_image.setImageResource(R.drawable.cloudy);
 					}
 					
