@@ -9,5 +9,6 @@
     <string name="temp">Tempurature: </string>
     <string name="condition">Condition: </string>
     <string name="status_picture">status_picture</string>
+    <string name="resultView">resultView</string>
 
 </resources>

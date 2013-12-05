@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 //This uses the ENUM, and creates the JSON array used in the project
 
 public class Json {
@@ -32,6 +34,7 @@ public class Json {
 		} catch (JSONException e){
 			e.printStackTrace();
 		}
+		Log.i("JSON", String.valueOf(weatherObject));
 		return weatherObject;
 	}
 	
@@ -45,7 +48,7 @@ public static String readJSON(String selected){
 		temp = object.getJSONObject("query").getJSONObject(selected).getString("temp");
 		condition = object.getJSONObject("query").getJSONObject(selected).getString("condition");
 		
-		result = 
+		result = "Zip Code: " + zipcode + "\r\n" + "Temperature: " + temp + "\r\n" + "Condition: " + condition;
 		
 	} catch (JSONException e){
 		e.printStackTrace();
