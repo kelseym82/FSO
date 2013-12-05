@@ -1,40 +1,38 @@
-package com.example.java1wk1;
-
-import java.util.ArrayList;
+package com.mkelsey.library;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
 
 //This uses the ENUM, and creates the JSON array used in the project
 
 public class Json {
-	ArrayList<String> _weatherData;
-
+	
 	public static JSONObject buildJSON(){
 		//Create the Objects
 		JSONObject weatherObject = new JSONObject();
 		try {
 			//creates the query object
-			JSONObject queryObject = new JSONObject();
+			JSONObject dataObject = new JSONObject();
 			
 			//For Loop to run through the enum and add the strings to the json object
 			for (Weather weather : Weather.values()){
 				//create the data object to store the values
-				JSONObject dataObject = new JSONObject();
+				JSONObject currentWeatherObject = new JSONObject();
 				//adds the weather data to the data object
-				dataObject.put("zipcode", weather.setZip());
-				dataObject.put("temp", weather.setTemp());
-				dataObject.put("condition", weather.setCondition());				
+				currentWeatherObject.put("zipcode", weather.setZip());
+				currentWeatherObject.put("condition", weather.setCondition());
+				currentWeatherObject.put("temp", weather.setTemp());
+				
+				dataObject.put(weather.name().toString(), currentWeatherObject);
 			}
 			// add the query to weather object
-			weatherObject.put("query", queryObject);
+			weatherObject.put("data", dataObject);
 			
 		} catch (JSONException e){
 			e.printStackTrace();
 		}
-		Log.i("JSON", String.valueOf(weatherObject));
+		
 		return weatherObject;
 	}
 	
@@ -44,11 +42,13 @@ public static String readJSON(String selected){
 	JSONObject object = buildJSON();
 	
 	try{
-		zipcode = object.getJSONObject("query").getJSONObject(selected).getString("zipcode");
-		temp = object.getJSONObject("query").getJSONObject(selected).getString("temp");
-		condition = object.getJSONObject("query").getJSONObject(selected).getString("condition");
+		zipcode = object.getJSONObject("data").getJSONObject(selected).getString("zipcode");
+		condition = object.getJSONObject("data").getJSONObject(selected).getString("condition");
+		temp = object.getJSONObject("data").getJSONObject(selected).getString("temp");
 		
-		result = "Zip Code: " + zipcode + "\r\n" + "Temperature: " + temp + "\r\n" + "Condition: " + condition;
+		result = "Zip Code: " + zipcode + "\r\n"
+				+ "Condition: " + condition + "\r\n"
+				+ "Temperature: " + temp + " Degrees";
 		
 	} catch (JSONException e){
 		e.printStackTrace();
