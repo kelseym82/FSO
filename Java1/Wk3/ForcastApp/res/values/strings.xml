@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The Forecast App</string>
+    <string name="action_settings">Settings</string>
+    <string name="hint_text">Enter zip code</string>
+    <string name="button_text">Go</string>
+    <string name="low_temp_label">Low</string>
+    <string name="high_temp_label">High</string>
+    <string name="condition_label">Current Condition</string>
+    <string name="date_label">Date</string>
+    <string name="day_label">Day</string>
+
+
+</resources>
