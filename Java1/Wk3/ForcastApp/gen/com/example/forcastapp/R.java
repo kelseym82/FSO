@@ -36,9 +36,9 @@ public final class R {
         public static final int condition_label=0x7f040006;
         public static final int date_label=0x7f040007;
         public static final int day_label=0x7f040008;
-        public static final int high_temp_label=0x7f040005;
         public static final int hint_text=0x7f040002;
-        public static final int low_temp_label=0x7f040004;
+        public static final int location_label=0x7f040005;
+        public static final int temp_label=0x7f040004;
     }
     public static final class style {
         /** 
