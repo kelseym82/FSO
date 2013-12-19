@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/searchField"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="@string/zip_code"/>
+        
+        <Button 
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go"/>
+        
+    </LinearLayout>
+       <GridLayout 
+            android:id="@+id/weatherdata"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:columnCount="2"
+            android:padding="10dip">
+            
+            <TextView 
+                style="@style/LabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"/>
+            <TextView 
+                style="@style/DataStyle"
+                android:id="@+id/data_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView 
+                style="@style/LabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/temp"/>
+            <TextView 
+                style="@style/DataStyle"
+                android:id="@+id/data_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView 
+                style="@style/LabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/condition"/>
+            <TextView 
+                style="@style/DataStyle"
+                android:id="@+id/data_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </GridLayout>
+        
+        <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:contentDescription="@string/status_picture"
+        android:scaleType="center"
+        android:src="@drawable/sunny" />
+
+</LinearLayout>

@@ -20,31 +20,80 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.forcastapp.R;
 import com.mkelsey.library.Connection;
-import com.mkelsey.library.SearchBar;
 
 public class MainActivity extends Activity {
 	
 	//Declare Global Variables Here
 	Context _context;
 	LinearLayout _ll;
-	SearchBar _search;
 	Boolean _connected = false;
-	com.mkelsey.library.GridView _gridView;
-	
+	ImageView _image;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		loadLayout();
-	}
+		setContentView(R.layout.layout);
+		_context = this;
+		_image = (ImageView) findViewById(R.id.image);
+		_connected = Connection.getConnectionStatus(_context);
+		Log.i("NETWORK CONNECTION", Connection.getConnectionType(_context));
 
+		
+		//Search Button Handler
+		Button searchButton = (Button) findViewById(R.id.searchButton);
+		searchButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				EditText field = (EditText) findViewById(R.id.searchField);
+				String zipCode = field.getText().toString();
+				field.setText(zipCode);
+				if (zipCode.length() !=5){
+					AlertDialog.Builder alert = new AlertDialog.Builder(_context);
+					alert.setTitle("Invalid Zip Code");
+					alert.setMessage("Please enter a valid Zip Code and try again.");
+					alert.setCancelable(false);
+					alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							dialogInterface.cancel();
+						}
+					});
+				alert.show();
+				} if (_connected != true){
+					//Alert if not connected
+		            AlertDialog.Builder alert = new AlertDialog.Builder(_context);
+		            alert.setTitle("No Network Connection");
+		            alert.setMessage("Check your network settings and try again.");
+		            alert.setCancelable(false);
+		            alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+		                @Override
+		                public void onClick(DialogInterface dialogInterface, int i) {
+		                    dialogInterface.cancel();
+		                }
+		            });
+		            alert.show();
+				
+		            //Disable button
+		            //searchButton.setClickable(false);
+				} if (_connected = true) {
+					getForecast(zipCode);
+				}
+			}
+		});
+		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -53,7 +102,7 @@ public class MainActivity extends Activity {
 	}
 
 	//Load Layout Method - Loads the layout parameters
-		public void loadLayout(){
+	/*	public void loadLayout(){
 			//Method Variables
 			_context = this;
 			_ll = new LinearLayout(this);
@@ -122,7 +171,8 @@ public class MainActivity extends Activity {
 			 //Set Content View
 			 setContentView(_ll);
 		}
-		
+	*/
+	
 	//Forecast retrieval method
 	private void getForecast(String zipCode){
 		//URL to API which adds a zipcode input to the middle of the URL
@@ -172,12 +222,28 @@ public class MainActivity extends Activity {
 					}else{
 						Toast toast = Toast.makeText(_context, "Valid Zip Code showing " + _locationResults.getString("title"), Toast.LENGTH_LONG);
 						toast.show();
-						String _temp = _weatherResults.getString("temp");
-	                    String _day = _weatherResults.getString("date");
-	                    String _condition = _weatherResults.getString("text");
-	                    String _location = _locationResults.getString("title");
-	                    //populates the gridView from the above strings.
-	                    _gridView.setForecastInfo(_day, _temp, _location, _condition);
+						//Sets the string text to be used to change the picture below
+						String text = _weatherResults.getString("text");
+						//populates the gridView from the strings received from JSON.
+						((TextView) findViewById(R.id.data_location)).setText(_locationResults.getString("title"));
+						((TextView) findViewById(R.id.data_temp)).setText(_weatherResults.getString("temp"));
+						((TextView) findViewById(R.id.data_condition)).setText(_weatherResults.getString("text"));
+						//Changes the Image on the page dependent on the type of weather outside, there are 48 types of weather, for now I am only coding in s.
+						if (text.equals("Partly Cloudy")){
+							_image.setImageResource(R.drawable.partly_cloudy);
+							Log.i("IMAGE SET", "PARTLY CLOUDY");
+						} else if (text.equals("Isolated Thunderstorms")){
+							_image.setImageResource(R.drawable.storms);
+						} else if (text.equals("Few Showers")){
+							_image.setImageResource(R.drawable.scatter_showers);
+						} else if (text.equals("Sunny")){
+							_image.setImageResource(R.drawable.sunny);
+						} else if (text.equals("Showers")){
+							_image.setImageResource(R.drawable.rain);
+						} else if (text.equals("Mostly Cloudy")){
+							_image.setImageResource(R.drawable.cloudy);
+						}
+	                    
 					}
 				} catch (JSONException e) {
 					//Redundant toast error, just in case the "City not found" error does not work.  I found this option to work 100% of the time when an invalid zipcode is used.
