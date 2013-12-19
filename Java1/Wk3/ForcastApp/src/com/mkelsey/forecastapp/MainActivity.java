@@ -101,77 +101,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	//Load Layout Method - Loads the layout parameters
-	/*	public void loadLayout(){
-			//Method Variables
-			_context = this;
-			_ll = new LinearLayout(this);
-			//Set String Text from Resource File
-			String _hintText = getResources().getString(R.string.hint_text);
-			String _buttonText = getResources().getString(R.string.button_text);
-			//Add Search Bar Button Handler
-			_search = new SearchBar(_context, _hintText, _buttonText);
-			Button searchButton = _search.getButton();
-			//On Click Listener for Button
-			searchButton.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View arg0) {
-					if (_search.getField().getText().toString().length() !=5){
-						AlertDialog.Builder alert = new AlertDialog.Builder(_context);
-						alert.setTitle("Invalid Zip Code");
-						alert.setMessage("Please enter a valid Zip Code and try again.");
-						alert.setCancelable(false);
-						alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								dialogInterface.cancel();
-							}
-						});
-					alert.show();
-					} else {
-						getForecast(_search.getField().getText().toString());
-					}
-				}
-			});
-			//Detect Network Connection - Will disable the button if no connection if found
-			_connected = Connection.getConnectionStatus(_context);
-			 if (_connected) {
-		            Log.i("NETWORK CONNECTION", Connection.getConnectionType(_context));
 
-		            // Enable button
-		            searchButton.setClickable(true);
-
-		        } else {
-		            //Alert if not connected
-		            AlertDialog.Builder alert = new AlertDialog.Builder(_context);
-		            alert.setTitle("No Network Connection");
-		            alert.setMessage("Check your network settings and try again.");
-		            alert.setCancelable(false);
-		            alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-		                @Override
-		                public void onClick(DialogInterface dialogInterface, int i) {
-		                    dialogInterface.cancel();
-		                }
-		            });
-		            alert.show();
-
-		            //Disable button
-		            searchButton.setClickable(false);
-		        }
-			//Add GridView
-			 _gridView = new com.mkelsey.library.GridView(_context);
-			//Add views to linear layout
-			 _ll.addView(_search);
-			 _ll.addView(_gridView);
-			 
-			 //Set Orientation
-			 _ll.setOrientation(LinearLayout.VERTICAL);
-			 
-			 //Set Content View
-			 setContentView(_ll);
-		}
-	*/
 	
 	//Forecast retrieval method
 	private void getForecast(String zipCode){
