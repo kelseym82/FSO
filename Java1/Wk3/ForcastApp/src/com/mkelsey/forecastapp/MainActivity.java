@@ -47,7 +47,6 @@ public class MainActivity extends Activity {
 		_context = this;
 		_image = (ImageView) findViewById(R.id.image);
 		_connected = Connection.getConnectionStatus(_context);
-		Log.i("NETWORK CONNECTION", Connection.getConnectionType(_context));
 
 		
 		//Search Button Handler
@@ -55,6 +54,7 @@ public class MainActivity extends Activity {
 		searchButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.i("NETWORK CONNECTION", Connection.getConnectionType(_context));
 				EditText field = (EditText) findViewById(R.id.searchField);
 				String zipCode = field.getText().toString();
 				field.setText(zipCode);
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
 						}
 					});
 				alert.show();
-				} if (_connected != true){
+				} if (_connected = false){
 					//Alert if not connected
 		            AlertDialog.Builder alert = new AlertDialog.Builder(_context);
 		            alert.setTitle("No Network Connection");
@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
 				
 		            //Disable button
 		            //searchButton.setClickable(false);
-				} if (_connected = true) {
+				} else {
 					getForecast(zipCode);
 				}
 			}
